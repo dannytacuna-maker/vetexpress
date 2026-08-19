@@ -75,15 +75,16 @@ export default function VetexpressPage() {
               Tres pasos en línea: zona, mensaje, y la cita en WhatsApp.
             </p>
             <div className="vx-path">
-              <svg className="vx-path-line" viewBox="0 0 1100 640" aria-hidden="true">
-                <path d="M118 78 C 430 -10, 220 310, 548 300 C 880 288, 720 590, 990 552" />
-              </svg>
               {steps.map((step, index) => (
-                <article className="vx-path-card" key={step.title}>
-                  <img src={step.photo} alt={step.alt} />
-                  <span className="vx-path-num">{index + 1}</span>
-                  <b>{step.title}</b>
-                  <p>{step.body}</p>
+                <article className="vx-path-card" key={step.title} data-step={index + 1}>
+                  <div className="vx-path-media">
+                    <img src={step.photo} alt={step.alt} />
+                  </div>
+                  <div className="vx-path-copy">
+                    <span className="vx-path-num">{index + 1}</span>
+                    <b>{step.title}</b>
+                    <p>{step.body}</p>
+                  </div>
                 </article>
               ))}
             </div>

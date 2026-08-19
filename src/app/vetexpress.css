@@ -1,3 +1,8 @@
+html,
+body {
+  margin: 0;
+}
+
 .vx {
   --vx-lime: #8fd63a;
   --vx-lime-deep: #3d8c14;
@@ -93,26 +98,38 @@
 
 .vx-hero {
   position: relative;
-  min-height: 100dvh;
+  width: 100%;
+  min-height: 100svh;
   display: grid;
   place-items: center;
-  overflow: clip;
+  overflow: hidden;
   padding: 6.5rem 1.25rem 4.5rem;
   text-align: center;
+  border: 0;
+  background: #111;
 }
 
 .vx-hero-visual {
   position: absolute;
   inset: 0;
+  overflow: hidden;
+  border: 0;
+  outline: none;
 }
 
 .vx-hero-reel,
 .vx-hero-still {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  transform: translate(-50%, -50%) scale(1.06);
 }
 
 .vx-hero-still {
@@ -317,75 +334,91 @@
   position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.4rem;
-  margin-top: 2.6rem;
-  min-height: 40rem;
+  gap: 2.6rem;
+  margin-top: 3.2rem;
   align-items: start;
-}
-
-.vx-path-line {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  overflow: visible;
-}
-
-.vx-path-line path {
-  fill: none;
-  stroke: var(--vx-lime-deep);
-  stroke-width: 4;
-  stroke-linecap: round;
-  stroke-dasharray: 7 12;
-  animation: vx-dash 16s linear infinite;
-}
-
-@keyframes vx-dash {
-  to {
-    stroke-dashoffset: -360;
-  }
 }
 
 .vx-path-card {
   position: relative;
-  z-index: 1;
   display: grid;
   justify-items: center;
   text-align: center;
-  background: #fff;
-  border: 2px solid var(--vx-line);
-  border-radius: 28px;
+  background: transparent;
+  border: 0;
+  overflow: visible;
+}
+
+.vx-path-card:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 9.4rem;
+  right: -1.85rem;
+  z-index: 2;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-right: 4px solid var(--vx-lime-deep);
+  border-top: 4px solid var(--vx-lime-deep);
+  transform: rotate(45deg);
+}
+
+.vx-path-media {
+  position: relative;
+  z-index: 1;
+  width: calc(100% - 1.1rem);
+  height: 270px;
   overflow: hidden;
-  padding-bottom: 1.2rem;
+  border-radius: 28px;
+  box-shadow: 0 22px 40px rgba(17, 17, 17, 0.18);
+  transform: translateY(var(--lift, 0px)) rotate(var(--tilt, 0deg));
+  animation: vx-pop 780ms var(--vx-ease) both;
 }
 
-.vx-path-card:nth-child(2) {
-  margin-top: 0;
+.vx-path-card:nth-child(1) .vx-path-media {
+  --tilt: -2.2deg;
+  --lift: 0px;
+  animation-delay: 80ms;
 }
 
-.vx-path-card:nth-child(3) {
-  margin-top: 7.5rem;
+.vx-path-card:nth-child(2) .vx-path-media {
+  --tilt: 1.8deg;
+  --lift: -10px;
+  animation-delay: 180ms;
 }
 
-.vx-path-card:nth-child(4) {
-  margin-top: 15rem;
+.vx-path-card:nth-child(3) .vx-path-media {
+  --tilt: -1.4deg;
+  --lift: 0px;
+  animation-delay: 280ms;
 }
 
-.vx-path-card img {
+.vx-path-media img {
+  display: block;
   width: 100%;
-  height: 280px;
-  object-fit: contain;
-  background: #e4f0b8;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.vx-path-copy {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  margin-top: -2.4rem;
+  padding: 2.6rem 0.95rem 1.25rem;
+  background: #fff;
+  border-radius: 28px;
+  box-shadow: 0 16px 36px rgba(17, 17, 17, 0.08);
 }
 
 .vx-path-num {
+  position: relative;
+  z-index: 1;
   display: grid;
   place-items: center;
   width: 2.15rem;
   height: 2.15rem;
-  margin-top: -1.1rem;
+  margin: 0 auto 0.55rem;
   background: var(--vx-yellow);
   border: 3px solid var(--vx-ink);
   border-radius: 50%;
@@ -395,18 +428,26 @@
 
 .vx-path-card b {
   display: block;
-  margin-top: 0.7rem;
-  padding: 0 0.9rem;
   font-family: var(--vx-display);
   font-size: 1.08rem;
 }
 
 .vx-path-card p {
   margin: 0.35rem 0 0;
-  padding: 0 0.95rem;
   color: var(--vx-muted);
   line-height: 1.45;
   font-size: 0.95rem;
+}
+
+@keyframes vx-pop {
+  from {
+    opacity: 0;
+    transform: translateY(22px) rotate(var(--tilt, 0deg));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(var(--lift, 0px)) rotate(var(--tilt, 0deg));
+  }
 }
 
 .vx-services {
@@ -457,6 +498,7 @@
 .vx-agenda {
   display: grid;
   gap: 1.75rem;
+  align-items: center;
 }
 
 .vx-agenda-map {
@@ -487,8 +529,8 @@
   display: block;
   width: 100%;
   height: min(52vw, 520px);
-  object-fit: contain;
-  background: #e4f0b8;
+  object-fit: cover;
+  object-position: center;
 }
 
 .vx-clinic-card div {
@@ -510,20 +552,117 @@
 
 .vx-form {
   display: grid;
-  gap: 1rem;
+  gap: 0.7rem;
+  flex: 1;
+  padding: 0.85rem 0.9rem 0.55rem;
+  overflow: auto;
+  background: transparent;
+  border: 0;
+}
+
+.vx-phone {
+  justify-self: center;
+  width: min(100%, 348px);
+}
+
+.vx-phone-bezel {
+  position: relative;
+  padding: 11px;
+  background: linear-gradient(160deg, #3a3a3e, #111 42%, #1b1b1d);
+  border-radius: 48px;
+  box-shadow:
+    0 28px 60px rgba(17, 17, 17, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.vx-phone-island {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  z-index: 3;
+  width: 96px;
+  height: 28px;
+  background: #0a0a0a;
+  border-radius: 20px;
+  transform: translateX(-50%);
+}
+
+.vx-phone-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 640px;
+  overflow: hidden;
+  background: #efe6dd;
+  border-radius: 38px;
+}
+
+.vx-phone-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 22px 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #111;
+}
+
+.vx-phone-status i {
+  display: block;
+  width: 96px;
+  height: 12px;
+}
+
+.vx-phone-wa {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.85rem 0.65rem;
+  background: #008069;
+  color: #fff;
+}
+
+.vx-phone-wa img {
+  width: 34px;
+  height: 34px;
+  object-fit: cover;
+  border-radius: 50%;
   background: #fff;
-  border: 3px solid var(--vx-ink);
-  border-radius: 28px;
-  padding: 1.25rem;
+}
+
+.vx-phone-wa b {
+  display: block;
+  font-size: 0.92rem;
+}
+
+.vx-phone-wa small {
+  display: block;
+  font-size: 0.68rem;
+  opacity: 0.8;
+}
+
+.vx-phone-bubble {
+  margin: 0 0 0.2rem;
+  justify-self: start;
+  max-width: 90%;
+  padding: 0.55rem 0.7rem;
+  background: #fff;
+  border-radius: 6px 16px 16px 16px;
+  color: var(--vx-muted);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  box-shadow: 0 1px 1px rgba(17, 17, 17, 0.06);
 }
 
 .vx-field {
   display: grid;
-  gap: 0.4rem;
+  gap: 0.2rem;
+  padding: 0.45rem 0.65rem 0.55rem;
+  background: #fff;
+  border-radius: 12px;
 }
 
 .vx-field span {
-  font-size: 0.72rem;
+  font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 800;
@@ -537,14 +676,15 @@
   background: transparent;
   color: var(--vx-ink);
   border: 0;
-  border-bottom: 2px solid var(--vx-line);
+  border-bottom: 1px solid var(--vx-line);
   border-radius: 0;
-  padding: 0.7rem 0;
+  padding: 0.35rem 0 0.3rem;
   outline: none;
+  font-size: 0.92rem;
 }
 
 .vx-field textarea {
-  min-height: 5rem;
+  min-height: 3.2rem;
   resize: vertical;
 }
 
@@ -559,9 +699,27 @@
   border-bottom-color: var(--vx-lime-deep);
 }
 
-.vx-form .vx-btn {
-  justify-self: start;
-  margin-top: 0.4rem;
+.vx-phone-send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.7rem;
+  margin-top: 0.2rem;
+  padding: 0 0.95rem;
+  border: 0;
+  border-radius: 999px;
+  background: #25d366;
+  color: #073b1a;
+  font-weight: 800;
+}
+
+.vx-phone-home {
+  width: 108px;
+  height: 5px;
+  margin: 0.35rem auto 0.55rem;
+  background: #111;
+  border-radius: 999px;
 }
 
 .vx-reviews {
@@ -669,11 +827,15 @@
 
 @media (min-width: 900px) {
   .vx-nav,
-  .vx-hero,
   .vx-section,
   .vx-foot {
     padding-left: 3rem;
     padding-right: 3rem;
+  }
+
+  .vx-hero {
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .vx-nav-links {
@@ -682,9 +844,9 @@
   }
 
   .vx-agenda {
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
-    gap: 4rem;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 3.5rem;
   }
 }
 
@@ -695,17 +857,17 @@
 
   .vx-path {
     grid-template-columns: 1fr;
-    min-height: 0;
+    gap: 2.8rem;
+    max-width: 26rem;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .vx-path-line {
-    display: none;
-  }
-
-  .vx-path-card:nth-child(2),
-  .vx-path-card:nth-child(3),
-  .vx-path-card:nth-child(4) {
-    margin-top: 0;
+  .vx-path-card:not(:last-child)::after {
+    top: auto;
+    right: 50%;
+    bottom: -1.65rem;
+    transform: translateX(50%) rotate(135deg);
   }
 
   .vx-clinic-grid {
@@ -718,7 +880,7 @@
     display: none;
   }
 
-  .vx-path-card img {
+  .vx-path-media {
     height: 260px;
   }
 
@@ -745,7 +907,7 @@
   }
 
   .vx-more i,
-  .vx-path-line path,
+  .vx-path-media,
   .vx-reel-track,
   .vx-banner,
   .vx-card,
