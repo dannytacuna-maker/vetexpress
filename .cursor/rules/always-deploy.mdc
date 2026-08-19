@@ -1,0 +1,11 @@
+# Always deploy to Vercel production
+
+Work **on** the live Vercel project, not against it. Do not start `next dev`, `npm run dev`, or any localhost server.
+
+When app code changes, deploy production from this folder:
+
+```
+npx vercel --prod --yes
+```
+
+Paste the live URL in chat. Browser QA runs against that Vercel URL.
